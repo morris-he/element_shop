@@ -12,7 +12,6 @@
         <el-form ref="category" :rules="rules" :model="category" label-width="80px">
 
             <el-col :span="16">
-
                 <el-form-item label="商品名称" prop="name">
                     <el-input v-model="category.name"></el-input>
                 </el-form-item>
@@ -109,7 +108,8 @@
                 console.log(response)
                 this.category=response.data.data.category
                 this.category.is_show=!!response.data.data.category.is_show
-                this.fileList = [{ name:response.data.data.category.image, url:response.data.data.category.image}]
+
+                this.fileList = [{ name:response.data.data.category.image, url:response.data.data.category.image==null || response.data.data.category.image=='' ?'':'http://images.canon4ever.com/'+response.data.data.category.image}]
             })
         },
         methods: {

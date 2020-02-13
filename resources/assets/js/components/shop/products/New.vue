@@ -184,7 +184,7 @@
                 });
             },
             handleUploadSuccess(response, file, fileList) {
-                this.product.image ='http://pa5hwvrye.bkt.clouddn.com/'+ response.image
+                this.product.image =response.image
             },
             handleUploadGalleriesSuccess(response, file, fileList) {
                 this.product.galleries.push(response.image_url)

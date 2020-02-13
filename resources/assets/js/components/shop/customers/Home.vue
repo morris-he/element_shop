@@ -46,6 +46,7 @@
                 <el-table ref="multipleTable" :data="customers" tooltip-effect="dark" style="width: 100%">
 
                     <el-table-column type="index" width="50"></el-table-column>
+
                     <el-table-column label="缩略图">
                         <template slot-scope="scope">
                             <img :src="scope.row.headimgurl" class="thumb">
@@ -140,8 +141,7 @@
         },
         methods: {
             init() {
-                axios.get(`/admin/shop/customers?page=${this.page.current_page}
-                &nickname=${this.customer.nickname}
+                axios.get(`/admin/shop/customers?page=${this.page.current_page}&nickname=${this.customer.nickname}
                 &openid=${this.customer.openid}
 				&sex=${this.customer.sex}
 				&created_at=${this.customer.created_at}`).then(response => {

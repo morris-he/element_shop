@@ -1,7 +1,7 @@
 <template>
     <div>
     <el-menu
-        default-active="/"
+        :default-active="active"
         class="el-menu-vertical-demo"
         @open="handleOpen"
         @close="handleClose"
@@ -75,10 +75,20 @@
     export default {
         data() {
             return {
-                isCollapse: true
+                isCollapse: true,
+                active:'/'
             };
         },
+        watch:{
+            '$route':'init'
+        },
+        created(){
+            this.init()
+        },
         methods: {
+            init(){
+                this.active = this.$route.path
+            },
             handleOpen(key, keyPath) {
                 console.log(key, keyPath);
             },
