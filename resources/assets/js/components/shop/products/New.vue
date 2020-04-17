@@ -19,8 +19,15 @@
 
                     <el-form-item label="商品分类" prop="category_id">
                         <el-select v-model="product.category_id" placeholder="请选择" filterable multiple>
-                            <el-option-group v-for="category in categories" :key="category.id" :label="category.name">
-                                <el-option v-for="item in category.children" :key="item.id" :label="item.name" :value="item.id"></el-option>
+                            <el-option-group
+                                v-for="category in categories"
+                                :key="category.id"
+                                :label="category.name">
+                                <el-option
+                                    v-for="item in category.children"
+                                    :key="item.id"
+                                    :label="item.name"
+                                    :value="item.id"></el-option>
                             </el-option-group>
                         </el-select>
                     </el-form-item>

@@ -10,7 +10,7 @@
                     <el-select v-model="product.category_id" placeholder="分类" class="category_width">
                         <el-option-group
                             v-for="category in categories"
-                            :key="category.name"
+                            :key="category.id"
                             :label="category.name">
                             <el-option
                                 v-for="item in category.children"
@@ -20,7 +20,6 @@
                         </el-option-group>
                     </el-select>
                 </el-form-item>
-
 
                 <el-form-item class="checkbox_4">
                     <el-checkbox v-model="product.is_top">置顶</el-checkbox>
@@ -71,7 +70,7 @@
                     <el-table-column prop="name" label="商品名称"></el-table-column>
                     <el-table-column label="所属分类">
                         <template slot-scope="scope">
-<!--                            <el-tag v-for="item in scope.row.categories" size="medium">{{ item.name }}</el-tag>-->
+                            <!--<el-tag v-for="item in scope.row.categories" size="medium">{{ item.name }}</el-tag>-->
                             {{scope.row.categories | join_categories}}
                         </template>
                     </el-table-column>
@@ -230,17 +229,17 @@
                 if (value == null) {
                     return ''
                 } else {
-                    if (value.substr(0, 4) == 'http') {
-                        console.log(value,'hahahh')
-                    } else {
-                        return 'http://images.canon4ever.com/' + value
-                    }
+                    // if (value.substr(0, 4) == 'http') {
+                    //     console.log(value)
+                    // } else {
+                    return 'http://images.canon4ever.com/' + value
+                    // }
                 }
             }
         },
         methods: {
-            init(){
-                let created_at = this.product.created_at = null ? '' : this.product.created_at
+            init() {
+                // let created_at = this.product.created_at = null ? '' : this.product.created_at
                 axios.get(`/admin/shop/products?page=${this.page.current_page}
 				&name=${this.product.name}
                 &category_id=${this.product.category_id}

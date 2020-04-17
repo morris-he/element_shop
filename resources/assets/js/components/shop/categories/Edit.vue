@@ -12,6 +12,7 @@
         <el-form ref="category" :rules="rules" :model="category" label-width="80px">
 
             <el-col :span="16">
+
                 <el-form-item label="商品名称" prop="name">
                     <el-input v-model="category.name"></el-input>
                 </el-form-item>
@@ -40,7 +41,10 @@
                 <el-form-item label="商品分类" prop="parent_id">
                     <el-select v-model="category.parent_id" placeholder="请选择分类">
                         <el-option label="顶级分类" :value="0"></el-option>
-                        <el-option :label="item.name" :value="item.id" v-for="item in categories" :key="item.id"></el-option>
+                        <el-option :label="item.name"
+                                   :value="item.id"
+                                   v-for="item in categories"
+                                   :key="item.id"></el-option>
                     </el-select>
                 </el-form-item>
 
@@ -108,8 +112,9 @@
                 console.log(response)
                 this.category=response.data.data.category
                 this.category.is_show=!!response.data.data.category.is_show
-
-                this.fileList = [{ name:response.data.data.category.image, url:response.data.data.category.image==null || response.data.data.category.image=='' ?'':'http://images.canon4ever.com/'+response.data.data.category.image}]
+                if(response.data.data.category.image){
+                    this.fileList = [{ name:response.data.data.category.image, url:'http://images.canon4ever.com/'+response.data.data.category.image}]
+                }
             })
         },
         methods: {
@@ -142,7 +147,6 @@
             }
             ,
             handleUploadSuccess(response, file, fileList) {
-
                 this.category.image = response.image_url
             }
             ,

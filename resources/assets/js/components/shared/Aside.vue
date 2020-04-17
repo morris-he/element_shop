@@ -1,7 +1,7 @@
 <template>
     <div>
     <el-menu
-        :default-active="active"
+        :default-active="activeIndex"
         class="el-menu-vertical-demo"
         @open="handleOpen"
         @close="handleClose"
@@ -76,18 +76,19 @@
         data() {
             return {
                 isCollapse: true,
-                active:'/'
+                activeIndex: '/',
             };
         },
-        watch:{
-            '$route':'init'
-        },
+        // 监听 当前路由的变化
+        // watch:{
+        //     '$route':'init'
+        // },
         created(){
             this.init()
         },
         methods: {
             init(){
-                this.active = this.$route.path
+                this.activeIndex = this.$route.path
             },
             handleOpen(key, keyPath) {
                 console.log(key, keyPath);

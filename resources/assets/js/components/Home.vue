@@ -1,7 +1,7 @@
 <template>
-    <div class="container">
-        我是首页
-    </div>
+<div class="container">
+    我是首页
+</div>
 </template>
 
 <script>

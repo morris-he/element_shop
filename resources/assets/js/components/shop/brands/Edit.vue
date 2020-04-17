@@ -15,6 +15,7 @@
                 <el-form-item label="品牌名称" prop="name">
                     <el-input v-model="brand.name"></el-input>
                 </el-form-item>
+
                 <el-form-item label="缩略图" prop="image">
                     <el-upload
                         class="upload-demo"
@@ -22,7 +23,6 @@
                         action="/admin/photo"
                         :file-list="fileList"
                         list-type="picture"
-                        limit="1"
                         name="file"
                         :on-preview="handlePreview"
                         :on-exceed="handleExceed"
@@ -73,10 +73,12 @@
     export default {
         data() {
             return {
-                brand: {},
+                brand: {
+
+                },
                 fileList: [],
                 dialogImageUrl: '',
-                    dialogVisible: false,
+                dialogVisible: false,
                 rules: {
                     name: [
                         {required: true, message: '请输入品牌名称', trigger: 'blur'},
@@ -97,18 +99,18 @@
         },
         created() {
             let id = this.$route.params.id
+
             axios.get(`http://localhost:8000/admin/shop/brands/${id}`).then(response => {
                 console.log(response)
                 this.brand = response.data.data.brand
                 this.brand.is_show = !!response.data.data.brand.is_show
-                // this.fileList = [{name: response.data.data.brand.image, url: response.data.data.brand.image}]
+                this.fileList = [{name: response.data.data.brand.image, url: response.data.data.brand.image}]
             })
-
         },
         methods: {
-            onSubmit(brand) {
+            onSubmit(x) {
                 let id = this.$route.params.id
-                this.$refs[brand].validate((valid) => {
+                this.$refs[x].validate((valid) => {
                     if (valid) {
                         axios.put(`http://localhost:8000/admin/shop/brands/${id}`, this.brand).then(() => {
                             this.$message({
@@ -122,7 +124,7 @@
                 })
             },
             handlePreview(file) {
-                console.log(url)
+                console.log(file)
                 this.dialogImageUrl = file.url;
                 this.dialogVisible = true;
             },

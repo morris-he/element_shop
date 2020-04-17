@@ -1,39 +1,41 @@
 
 <template>
     <div>
+        <div id="main" style="width: 600px;height:400px;"></div>
+        <div id="main1" style="width: 600px;height:400px;"></div>
 
         <!--本周订单图-->
-        <el-row>
-            <el-col :span="24">
-                <div id="sales_count" style="width: 100%;height:400px;"></div>
-            </el-col>
-        </el-row>
+        <!--<el-row>-->
+            <!--<el-col :span="24">-->
+                <!--<div id="sales_count" style="width: 100%;height:400px;"></div>-->
+            <!--</el-col>-->
+        <!--</el-row>-->
 
-        <!--本周销量图-->
-        <el-row>
-            <el-col :span="24">
-                <div id="sales_amount" style="width: 100%;height:400px;"></div>
-            </el-col>
-        </el-row>
+        <!--&lt;!&ndash;本周销量图&ndash;&gt;-->
+        <!--<el-row>-->
+            <!--<el-col :span="24">-->
+                <!--<div id="sales_amount" style="width: 100%;height:400px;"></div>-->
+            <!--</el-col>-->
+        <!--</el-row>-->
 
-        <!--本月热销商品Top图-->
-        <el-row>
-            <el-col :span="24">
-                <div id="top" style="width: 100%;height:400px;"></div>
-            </el-col>
-        </el-row>
+        <!--&lt;!&ndash;本月热销商品Top图&ndash;&gt;-->
+        <!--<el-row>-->
+            <!--<el-col :span="24">-->
+                <!--<div id="top" style="width: 100%;height:400px;"></div>-->
+            <!--</el-col>-->
+        <!--</el-row>-->
 
 
-        <el-row>
-            <!--会员性别统计-->
-            <el-col :span="12">
-                <div id="sex_count" style="width: 100%;height:400px;"></div>
-            </el-col>
-            <!--会员省份统计-->
-            <el-col :span="12">
-                <div id="customer_province" style="width: 100%;height:400px;"></div>
-            </el-col>
-        </el-row>
+        <!--<el-row>-->
+            <!--&lt;!&ndash;会员性别统计&ndash;&gt;-->
+            <!--<el-col :span="12">-->
+                <!--<div id="sex_count" style="width: 100%;height:400px;"></div>-->
+            <!--</el-col>-->
+            <!--&lt;!&ndash;会员省份统计&ndash;&gt;-->
+            <!--<el-col :span="12">-->
+                <!--<div id="customer_province" style="width: 100%;height:400px;"></div>-->
+            <!--</el-col>-->
+        <!--</el-row>-->
     </div>
 </template>
 
@@ -43,12 +45,18 @@
     import 'echarts/map/js/china.js'
 
     export default {
-
+        data(){
+            return{
+                lists:[]
+            }
+        },
     // mounted 是生命周期，在DOM事件渲染完成之后执行，相当于调用
         created(){
+
         },
         mounted() {
             this.init()
+            this.init1()
             // this.map_x();
             // this.sales_count();
             // this.sales_amount();
@@ -58,25 +66,23 @@
         },
         methods: {
             init(){
-                var myChart = echarts.init(document.getElementById('sales_count'));
+                var myChart = echarts.init(document.getElementById('main'));
 
                 // 指定图表的配置项和数据
-
-                // 使用刚指定的配置项和数据显示图表。
-                myChart.setOption({
+                var option = {
                     tooltip: {
                         trigger: 'item',
-                        formatter: "{a} <br/>{b}: {c} ({d}%)"
+                        formatter: '{a} <br/>{b}: {c} ({d}%)'
                     },
                     legend: {
                         orient: 'vertical',
-                        x: 'left',
-                        data:['直接访问','邮件营销','联盟广告','视频广告','搜索引擎']
+                        left: 10,
+                        data: ['直接访问', '邮件营销', '联盟广告', '视频广告', '搜索引擎']
                     },
                     series: [
                         {
-                            name:'访问来源',
-                            type:'pie',
+                            name: '访问来源',
+                            type: 'pie',
                             radius: ['50%', '70%'],
                             avoidLabelOverlap: false,
                             label: {
@@ -97,17 +103,59 @@
                                     show: false
                                 }
                             },
-                            data:[
-                                {value:335, name:'直接访问'},
-                                {value:310, name:'邮件营销'},
-                                {value:234, name:'联盟广告'},
-                                {value:135, name:'视频广告'},
-                                {value:1548, name:'搜索引擎'}
+                            data: [
+                                {value: 335, name: '直接访问'},
+                                {value: 310, name: '邮件营销'},
+                                {value: 234, name: '联盟广告'},
+                                {value: 135, name: '视频广告'},
+                                {value: 1548, name: '搜索引擎'}
                             ]
                         }
                     ]
-                });
+                };
+
+                // 使用刚指定的配置项和数据显示图表。
+                myChart.setOption(option);
+                // var myChart = echarts.init(document.getElementById('sales_count'));
+                //
+                // // 指定图表的配置项和数据
+                // var option = {
+                //     xAxis: {
+                //         type: 'category',
+                //         data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+                //     },
+                //     yAxis: {
+                //         type: 'value'
+                //     },
+                //     series: [{
+                //         data: [820, 932, 901, 934, 1290, 1330, 1320],
+                //         type: 'line'
+                //     }]
+                // };
+
+
+                // 使用刚指定的配置项和数据显示图表。
+                // myChart.setOption(option);
+            },
+            init1(){
+                var myChat = echarts.init(document.getElementById('main1'))
+
+                var option = {
+                    xAxis: {
+                        type: 'category',
+                        data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+                    },
+                    yAxis: {
+                        type: 'value'
+                    },
+                    series: [{
+                        data: [820, 932, 901, 934, 1290, 1330, 1320],
+                        type: 'line'
+                    }]
+                };
+                myChat.setOption(option)
             }
+
             // 地图
             // map_x(){
             //     axios.get("http://localhost:8000/api/sales_count").then(response => {

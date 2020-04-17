@@ -23,16 +23,13 @@
 
                                 <div class="order-status">
                                     {{order.status | orderStatus}}
-
                                     <div style=" float:right;margin-right:10px;">
-
                                         <!--配货-->
                                         <el-button type="primary" v-if="order.status == 2" @click="handlePicking">配货
                                         </el-button>
-
                                         <!--发货及收货-->
                                         <form style="display: inline-block" class="am-form-inline"
-                                              v-if="order.status == 3 | order.status == 4">
+                                              v-if="order.status == 3 || order.status == 4">
                                             <div class="am-form-group">
                                                 <el-select v-model="order.express_id" placeholder="请选择快递">
                                                     <el-option v-for="express in expresses" :key="express.id"
@@ -43,14 +40,12 @@
                                             <div class="am-form-group">
                                                 <el-input v-model="order.express_code" placeholder="请输入快递单号"></el-input>
                                             </div>
-                                            <el-button type="danger" @click="handleShipping">{{order.status==3 ? '发货':'修改快递单号'}}</el-button>
+                                            <el-button type="danger" @click="handleShipping">{{order.status==3 ? '发货':'修改递单号'}}</el-button>
                                             <el-button class="ordersuccess" type="success" v-if="order.status==4" @click="handleFinish">交易成功
                                             </el-button>
                                         </form>
-
                                     </div>
                                 </div>
-
                                 <!--步骤条-->
                                 <div class="order-progress">
                                     <el-row :gutter="20">
@@ -71,9 +66,7 @@
                                         <iframe :src="'http://m.kuaidi100.com/index_all.html?type='+ order.express.code + '&postid='+order.express_code" frameborder="0" width="100%" height="500"></iframe>
                                     </el-collapse-item>
                                 </el-collapse>
-
                             </div>
-
 
                             <table class="order-items-table">
                                 <tbody>
@@ -196,7 +189,6 @@
                 },
                 expresses: [],
                 order_products: []
-
             }
         },
         created() {
@@ -250,7 +242,8 @@
                 this.order.status=3
             },
             handleShipping(){
-                axios.patch(`/admin/shop/orders/shipping?id=${this.order.id}&status=${this.order.status}&express_id=${this.order.express_id}&express_code=${this.order.express_code}`)
+                axios.patch(`/admin/shop/orders/shipping?id=${this.order.id}&status=${this.order.status}
+                &express_id=${this.order.express_id}&express_code=${this.order.express_code}`)
                 this.init()
 
             },

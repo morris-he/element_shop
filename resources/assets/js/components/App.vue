@@ -4,11 +4,9 @@
             <AdminHeader></AdminHeader>
         </el-header>
         <el-container>
-
             <el-aside width="200px">
                 <Aside></Aside>
             </el-aside>
-
             <el-main class="animate_fix"> <!--添加动画效果-->
                 <transition name="fade">
                     <router-view/>
@@ -22,12 +20,9 @@
 <script>
     import Aside from './shared/Aside.vue'
     import AdminHeader from './shared/Header.vue'
-
     export default {
-        data(){
-          return{
-              loading:true
-          }
+        data() {
+            return {}
         },
         name: 'App',
         components: {
@@ -120,6 +115,9 @@
         padding: 20px;
         box-sizing: border-box;
     }
+    ::-webkit-scrollbar{
+        display:none;
+    }
 
     /*订单管理CSS设置*/
     .el-card__body {
@@ -149,6 +147,5 @@
     .el-table td, .el-table th {
         text-align: center;
     }
-
 
 </style>

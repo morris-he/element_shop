@@ -59,8 +59,6 @@
                 </el-table>
             </el-main>
 
-
-
             <el-footer>
                 <el-pagination
                     background
@@ -78,7 +76,6 @@
 <script>
     export default {
         data() {
-
             return {
                 categories: [],
                 products: [],
@@ -173,6 +170,7 @@
                     this.init()
                     this.$message({
                         type: 'success',
+                        message: '还原成功!'
                     })
                 });
             },

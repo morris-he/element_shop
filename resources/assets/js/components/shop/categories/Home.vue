@@ -9,7 +9,7 @@
 
         <el-table
             :data="categories"
-            :tree-props="{ hasChildren: 'hasChildren' }"
+            :tree-props="{ children: 'children' }"
             style="width: 100%"
             row-key="id"
             v-if="changing"
@@ -79,9 +79,8 @@
             this.init()
         },
         computed: {
-            // 计算属性的 getter
+            // 计算属性
             expand_word() {
-                // `this` 指向 vm 实例
                 return this.expand ? "关闭" : "展开"
             }
         },
@@ -111,11 +110,11 @@
                     // console.log(row)
                     axios.delete(`http://localhost:8000/admin/shop/categories/${row.id}`).then((response) => {
                         console.log(response.data.success)
-                        if (!response.data.success) {
-                            this.$message.error(response.data.msg);
-                            return
-                        }
-                        parent = parent || this.categories
+                        // if (!response.data.success) {
+                        //     this.$message.error(response.data.msg);
+                        //     return
+                        // }
+                        // parent = parent || this.categories
                         // if(!parent){
                         //     parent= this.categories;
                         // }
@@ -137,9 +136,13 @@
              *  展开显示
              *  *  **/
             showChildren() {
+                //显示变成true
                 this.expand = !this.expand
+                //当前变拿掉的表格是展开属性为false的那个
                 this.changing = false
+                // // //等待dom更新之后去做的事情
                 this.$nextTick(() => {
+                //让展开属性为true的那个表格 出现
                     this.changing = true
                 })
             },
@@ -162,15 +165,16 @@
                 console.log(id, sort_order_value)
                 axios.patch(`http://localhost:8000/admin/shop/categories/sort_order`, {id: id, sort_order: sort_order_value})
                     .then(response => {
+                        //被排序的数据
                         console.log(response)
                         this.categories = response.data.data.categories
                     })
                     .catch(error => {
-                        console.log(error)
-                        if (error.response && error.response.status == "422") {
-                            this.$message.error("填写的排序不正确！必须是0~99的数字！")
-                        }
-                    });
+                    console.log(error)
+                    if (error.response && error.response.status == "422") {
+                        this.$message.error("填写的排序不正确！必须是0~99的数字！")
+                    }
+                });
             },
         }
     }

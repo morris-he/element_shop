@@ -37,7 +37,6 @@
                     </el-upload>
                 </el-form-item>
 
-
                 <el-form-item label="商品分类" prop="parent_id">
                     <el-select v-model="category.parent_id" placeholder="请选择分类">
                         <!--<el-option label="顶级分类" :value="0"></el-option>-->
@@ -97,7 +96,7 @@
                 rules: {
                     name: [
                         {required: true, message: '请输入品牌名称', trigger: 'blur'},
-                        {min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur'}
+                        {min: 3, max: 20, message: '长度在 3 到 5 个字符', trigger: 'blur'}
                     ],
                     parent_id: [
                         {required: true, message: '请选择分类', trigger: 'change'}

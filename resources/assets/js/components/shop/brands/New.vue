@@ -15,7 +15,6 @@
                 <el-form-item label="品牌名称" prop="name">
                     <el-input v-model="brand.name"></el-input>
                 </el-form-item>
-
                 <el-form-item label="缩略图" prop="image">
                     <el-upload
                         class="upload-demo"
@@ -23,7 +22,7 @@
                         action="/admin/photo"
                         :file-list="fileList"
                         list-type="picture"
-                        :limit="1"
+                        :limit=1
                         name="file"
                         :on-preview="handlePreview"
                         :on-exceed="handleExceed"
@@ -35,24 +34,18 @@
                         <div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过500kb</div>
                     </el-upload>
                 </el-form-item>
-
                 <el-form-item label="品牌网址" prop="url">
                     <el-input v-model="brand.url"></el-input>
                 </el-form-item>
-
                 <el-form-item label="排序" prop="sort_order">
                     <el-input v-model.number="brand.sort_order"></el-input>
                 </el-form-item>
-
-
                 <el-form-item label="是否显示" prop="is_show">
                     <el-switch v-model="brand.is_show"></el-switch>
                 </el-form-item>
-
                 <el-form-item label="品牌描述" prop="description">
                     <el-input type="textarea" v-model="brand.description"></el-input>
                 </el-form-item>
-
                 <el-form-item>
                     <el-button type="primary" @click="onSubmit('brand')">立即创建</el-button>
                     <router-link :to="{name: 'Brands'}">
@@ -60,7 +53,6 @@
                     </router-link>
                     <el-button @click="resetForm('brand')">重置</el-button>
                 </el-form-item>
-
             </el-col>
 
         </el-form>
@@ -78,13 +70,12 @@
             return {
                 fileList: [],
                 brand: {
-                    sort_order:2,
-                    is_show:true,
+                    is_show:false,
                     image:''
                 },
-                site:{
-                  photo_id:''
-                },
+                // site:{
+                //   photo_id:''
+                // },
                 dialogImageUrl:'',
                 dialogVisible: false,
                 rules: {
@@ -105,11 +96,19 @@
             }
         },
         methods: {
+            handleRemove(file, fileList) {
+                console.log(file, fileList);
+            },
+            handlePictureCardPreview(file) {
+                this.dialogImageUrl = file.url;
+                this.dialogVisible = true;
+            },
+
 
             onSubmit(formName) {
                 console.log(this.brand)
-                this.$refs[formName].validate((valid) => {
-                    if (valid) {
+                this.$refs[formName].validate((x) => {
+                    if (x) {
                         axios.post(`http://localhost:8000/admin/shop/brands`,this.brand).then(res =>{
                             this.$message({
                                 message: '恭喜你，这是一条成功消息',
@@ -138,7 +137,7 @@
                 });
             },
             handleUploadSuccess(response, file, fileList) {
-                console.log(response)
+                console.log(response,333333)
                 this.brand.image = response.image_url
             },
             handleRemove(file, fileList) {
@@ -148,6 +147,7 @@
                 this.$refs[formName].resetFields();
             },
             beforeUpload(file) {
+                console.log(file)
                 const isJPG = file.type === 'image/jpeg';
                 const isPNG = file.type === 'image/png';
                 const isGIF = file.type === 'image/gif';
@@ -165,10 +165,18 @@
             }
         }
     }
+
+
+
+
+
+
+
+
 </script>
 
 
-<style scoped>
+<style>
     .New-main {
         margin: 30px 0 20px 16px;
     }

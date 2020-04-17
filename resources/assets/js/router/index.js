@@ -121,6 +121,5 @@ export default new Router({
             name: 'AdsTrash',
             component: AdsTrash
         }
-
     ]
 })

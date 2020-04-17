@@ -10,6 +10,7 @@
         <el-table :data="categories" style="width: 100%" row-key="id" :expand-row-keys="expand">
             <el-table-column type="expand">
                 <template slot-scope="props">
+
                     <el-table :data="props.row.children" style="width: 100%"
                               :show-header="false">
                         <el-table-column label="商品 ID" prop="id"></el-table-column>
