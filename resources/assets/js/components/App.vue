@@ -5,14 +5,13 @@
         </el-header>
         <el-container>
             <el-aside width="200px">
-                <Aside></Aside>
+               <Aside></Aside>
             </el-aside>
             <el-main class="animate_fix"> <!--添加动画效果-->
                 <transition name="fade">
                     <router-view/>
                 </transition>
             </el-main>
-
         </el-container>
     </el-container>
 </template>

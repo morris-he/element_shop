@@ -4,7 +4,7 @@
             <router-link :to="{ name: 'CategoriesNew'}">
                 <el-button type="success" icon="el-icon-edit">新增</el-button>
             </router-link>
-            <el-button type="info" icon="el-icon-d-caret" @click="showChildren">{{expand_word}}</el-button>
+            <el-button type="info" icon="el-icon-d-caret" @click="showChildren">展开</el-button>
         </el-header>
 
         <el-table
@@ -12,7 +12,7 @@
             :tree-props="{ children: 'children' }"
             style="width: 100%"
             row-key="id"
-            v-if="changing"
+            :key="changing"
             :default-expand-all="expand">
             <el-table-column label="商品 ID" prop="id"></el-table-column>
             <el-table-column label="缩略图" prop="image">
@@ -98,6 +98,7 @@
                 this.$router.push({name: 'CategoriesEdit', params: {id: row.id}});
             },
 
+
             /**
              *  删除
              *  *  **/
@@ -140,8 +141,8 @@
                 this.expand = !this.expand
                 //当前变拿掉的表格是展开属性为false的那个
                 this.changing = false
-                // // //等待dom更新之后去做的事情
-                this.$nextTick(() => {
+                //等待dom更新之后去做的事情
+                this.$nextTick(()=>{
                 //让展开属性为true的那个表格 出现
                     this.changing = true
                 })

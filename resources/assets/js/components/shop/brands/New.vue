@@ -47,7 +47,7 @@
                     <el-input type="textarea" v-model="brand.description"></el-input>
                 </el-form-item>
                 <el-form-item>
-                    <el-button type="primary" @click="onSubmit('brand')">立即创建</el-button>
+                    <el-button type="primary" @click="submitForm('brand')">立即创建</el-button>
                     <router-link :to="{name: 'Brands'}">
                         <el-button>取消</el-button>
                     </router-link>
@@ -70,13 +70,13 @@
             return {
                 fileList: [],
                 brand: {
-                    is_show:false,
-                    image:''
+                    is_show: false,
+                    image: ''
                 },
                 // site:{
                 //   photo_id:''
                 // },
-                dialogImageUrl:'',
+                dialogImageUrl: '',
                 dialogVisible: false,
                 rules: {
                     name: [
@@ -90,7 +90,7 @@
                         {min: 0, max: 255, message: '不能超过255个字符', trigger: 'blur'}
                     ],
                     sort_order: [
-                        {type: 'number',message: '排序内容必须是数字'}
+                        {type: 'number', message: '排序内容必须是数字'}
                     ],
                 }
             }
@@ -104,17 +104,34 @@
                 this.dialogVisible = true;
             },
 
+            submitForm(x) {
+                this.$refs[x].validate((valid) => {
+                    if (valid) {
+                        axios.post('http://localhost:8000/admin/shop/brands', this.brand).then(res => {
+                            console.log(res)
+                            this.$message({
+                                message: '恭喜你，这是一条成功消息',
+                                type: 'success'
+                            });
+                            this.$router.push({name: 'Brands'})
+                        })
+                    } else {
+                        console.log('error submit!!');
+                        return false;
+                    }
+                });
+            },
 
             onSubmit(formName) {
                 console.log(this.brand)
                 this.$refs[formName].validate((x) => {
                     if (x) {
-                        axios.post(`http://localhost:8000/admin/shop/brands`,this.brand).then(res =>{
+                        axios.post(`http://localhost:8000/admin/shop/brands`, this.brand).then(res => {
                             this.$message({
                                 message: '恭喜你，这是一条成功消息',
                                 type: 'success'
                             })
-                            this.$router.push({name:'Brands'})
+                            this.$router.push({name: 'Brands'})
                         })
                     } else {
                         console.log('错误的输入');
@@ -137,7 +154,7 @@
                 });
             },
             handleUploadSuccess(response, file, fileList) {
-                console.log(response,333333)
+                console.log(response, 333333)
                 this.brand.image = response.image_url
             },
             handleRemove(file, fileList) {
@@ -167,12 +184,6 @@
     }
 
 
-
-
-
-
-
-
 </script>
 
 
@@ -180,6 +191,7 @@
     .New-main {
         margin: 30px 0 20px 16px;
     }
+
     .el-form {
         margin-top: 30px;
     }

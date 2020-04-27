@@ -104,7 +104,7 @@
                 console.log(response)
                 this.brand = response.data.data.brand
                 this.brand.is_show = !!response.data.data.brand.is_show
-                this.fileList = [{name: response.data.data.brand.image, url: response.data.data.brand.image}]
+                // this.fileList = [{name: response.data.data.brand.image, url: response.data.data.brand.image}]
             })
         },
         methods: {
@@ -114,7 +114,6 @@
                     if (valid) {
                         axios.put(`http://localhost:8000/admin/shop/brands/${id}`, this.brand).then(() => {
                             this.$message({
-                                showClose: true,
                                 message: '恭喜你，更新成功',
                                 type: 'success'
                             });

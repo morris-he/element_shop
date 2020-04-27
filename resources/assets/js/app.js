@@ -16,7 +16,6 @@ import router from './router'
 window.Vue = require('vue');
 Vue.use(ElementUI);
 // Vue.component('downloadExcel', JsonExcel)
-Vue.prototype.axios=axios
 
 // const originalPush = router.prototype.push
 // router.prototype.push = function push(location) {

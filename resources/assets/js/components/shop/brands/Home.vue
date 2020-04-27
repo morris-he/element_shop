@@ -7,6 +7,7 @@
                 </router-link>
                 <el-button type="success" icon="el-icon-edit">导出</el-button>
             </el-header>
+
             <el-main class="table_main">
                 <el-table :data="brands"  tooltip-effect="dark" style="width: 100%">
                     <el-table-column prop="id" label="品牌ID" width="80"></el-table-column>
@@ -25,7 +26,6 @@
                         <template slot-scope="scope">
                             <!--<i class="el-icon-edit"></i>-->
                             <i :class="scope.row.is_show | checkOrClose"></i>
-                            <!--<i :class="scope.row.is_show?'el-icon-check':'el-icon-close'"></i>-->
                         </template>
                     </el-table-column>
 
@@ -57,7 +57,6 @@
 </template>
 
 <script>
-    // import axios from 'axios'
     export default {
         data() {
             return {
@@ -81,9 +80,21 @@
         },
         //页面加载之前执行的方法
         created() {
-            this.x()
+            this.init_()
         },
         methods: {
+            init_(){
+                axios.get(`http://localhost:8000/admin/shop/brands?page=${this.page.current_page}`).then(response => {
+                    console.log(response)
+                    let brands = response.data.data.brands
+                    this.brands = brands.data
+                    this.page = {
+                        total: brands.total,
+                        pageSize: brands.per_page,
+                        current_page: brands.current_page
+                    }
+                })
+            },
             async fetchData() {
                 return this.brands
             },
@@ -93,18 +104,6 @@
             finishDownload() {
                 alert('hide loading');
             },
-            x(){
-                axios.get(`http://localhost:8000/admin/shop/brands?page=${this.page.current_page}`).then(response => {
-                    console.log(response)
-                    let brand = response.data.data.brands
-                    this.brands = brand.data
-                    this.page = {
-                        total: brand.total,
-                        pageSize: brand.per_page,
-                        current_page: brand.current_page
-                    }
-                })
-            },
             init() {
                 // 解决每页最后一条删除后不跳往前一页
                 //如果删除某一页的最后一条，则判断（是否还有前一页，是不是最后一条）
@@ -113,39 +112,25 @@
                     let last_delete = response.data.data.brands.data.length
                     if(last_delete == 0 && this.page.current_page > 1){
                         this.page.current_page -= 1
-                        this.for_page()
+                        this.init_()
                     }else{
-                        this.for_page()
+                        this.init_()
                     }
                 })
             },
 
-            for_page() {
-                axios.get(`http://localhost:8000/admin/shop/brands?page=${this.page.current_page}`).then(response => {
-                    console.log(response)
-                    let brand = response.data.data.brands
-                    this.brands = brand.data
-                    this.page = {
-                        total: brand.total,
-                        pageSize: brand.per_page,
-                        current_page: brand.current_page
-                    }
-                })
-            },
             /**
              *  分页控件
              *  **/
             handleCurrentChange(val) {
-                console.log(val)
                 this.page.current_page = val
-                this.x()
-                // this.for_page()
+                this.init_()
             },
             /**
              *  编辑传参
              *  *  **/
             handleEdit(index, row) {
-                console.log(index,row.id)
+                console.log(index,row)
                 this.$router.push({name: 'BrandsEdit', params: {id: row.id}});
             },
 
@@ -160,20 +145,43 @@
                     cancelButtonText: '取消',
                     type: 'warning'
                 }).then(() => {
-                    //异步操作
-                    axios.delete(`http://localhost:8000/admin/shop/brands/${row.id}`).then(res => {
+
+                    axios.delete(`http://localhost:8000/admin/shop/brands/${row.id}`).then(res=>{
                         this.$message({
                             type: 'success',
                             message: '删除成功!'
                         });
                         this.init()
                     })
+
+
                 }).catch(() => {
                     this.$message({
                         type: 'info',
                         message: '已取消删除'
                     });
                 });
+
+
+                // this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+                //     confirmButtonText: '确定',
+                //     cancelButtonText: '取消',
+                //     type: 'warning'
+                // }).then(() => {
+                //     //异步操作
+                //     axios.delete(`http://localhost:8000/admin/shop/brands/${row.id}`).then(res => {
+                //         this.$message({
+                //             type: 'success',
+                //             message: '删除成功!'
+                //         });
+                //         this.init()
+                //     })
+                // }).catch(() => {
+                //     this.$message({
+                //         type: 'info',
+                //         message: '已取消删除'
+                //     });
+                // });
             },
 
             /**
@@ -224,4 +232,6 @@
         color: red;
         font-weight: bold;
     }
+
+
 </style>
