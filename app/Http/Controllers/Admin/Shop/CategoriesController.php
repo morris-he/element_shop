@@ -16,6 +16,7 @@ class CategoriesController extends Controller
     function index()
     {
         $categories = Category::get_categories();
+        Category::clear();
         return ['success' => true, 'msg' => '', 'data' => compact('categories')];
     }
 

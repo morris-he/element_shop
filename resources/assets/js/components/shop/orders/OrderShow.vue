@@ -28,8 +28,7 @@
                                         <el-button type="primary" v-if="order.status == 2" @click="handlePicking">配货
                                         </el-button>
                                         <!--发货及收货-->
-                                        <form style="display: inline-block" class="am-form-inline"
-                                              v-if="order.status == 3 || order.status == 4">
+                                        <form style="display: inline-block" class="am-form-inline" v-if="order.status == 3 || order.status == 4">
                                             <div class="am-form-group">
                                                 <el-select v-model="order.express_id" placeholder="请选择快递">
                                                     <el-option v-for="express in expresses" :key="express.id"
@@ -234,6 +233,7 @@
                 axios.get(`/admin/shop/orders/${id}`).then(response => {
                     console.log(response)
                     this.order = response.data.data.order
+                    this.order.express_id=''
                     this.expresses = response.data.data.expresses
                 })
             },

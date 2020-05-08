@@ -123,6 +123,7 @@
 </template>
 
 <script>
+
     import 'quill/dist/quill.core.css'                           //适用于VUE的富文本编辑器的引用
     import 'quill/dist/quill.snow.css'
     import 'quill/dist/quill.bubble.css'

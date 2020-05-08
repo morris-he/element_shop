@@ -146,6 +146,7 @@
                 });
             },
             handleUploadSuccess(response, file, fileList) {
+                console.log(response)
                 this.category.image = response.image
             },
             handleRemove(file, fileList) {

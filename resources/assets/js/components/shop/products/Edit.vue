@@ -148,7 +148,6 @@
             let id = this.$route.params.id
             axios.get(`/admin/shop/products/${id}`).then(response => {
                 let product = response.data.data.product
-                console.log(product)
                 this.product = {
                     id: product.id,
                     name: product.name,

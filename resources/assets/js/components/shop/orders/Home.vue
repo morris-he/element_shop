@@ -105,7 +105,7 @@
         filters: {
             orderStatus(value) {
                 let status = ['待付款', '待发货', '配货中', '待收货', '交易成功']
-                return status[value - 1]
+                return status[value-1]
             },
             // orderColor(value) {
             //     switch (value) {

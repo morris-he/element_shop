@@ -4,7 +4,7 @@
             <router-link :to="{ name: 'CategoriesNew'}">
                 <el-button type="success" icon="el-icon-edit">新增</el-button>
             </router-link>
-            <el-button type="info" icon="el-icon-d-caret" @click="showChildren">展开</el-button>
+            <el-button type="info" icon="el-icon-d-caret" @click="showChildren">{{expand_word}}</el-button>
         </el-header>
 
         <el-table
@@ -58,7 +58,7 @@
             return {
                 categories: [],
                 expand: false,
-                changing: true
+                changing: true,
             }
         },
         filters: {
@@ -163,8 +163,7 @@
              *  排序
              *  *  **/
             sort_order(id, sort_order_value) {
-                console.log(id, sort_order_value)
-                axios.patch(`http://localhost:8000/admin/shop/categories/sort_order`, {id: id, sort_order: sort_order_value})
+                axios.patch(`http://localhost:8000/admin/shop/categories/sort_order`, {id:id, sort_order:sort_order_value})
                     .then(response => {
                         //被排序的数据
                         console.log(response)

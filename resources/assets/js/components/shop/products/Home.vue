@@ -70,7 +70,7 @@
                     <el-table-column prop="name" label="商品名称"></el-table-column>
                     <el-table-column label="所属分类">
                         <template slot-scope="scope">
-                            <!--<el-tag v-for="item in scope.row.categories" size="medium">{{ item.name }}</el-tag>-->
+<!--                            <el-tag v-for="item in scope.row.categories" size="medium">{{ item.name }}</el-tag>-->
                             {{scope.row.categories | join_categories}}
                         </template>
                     </el-table-column>
